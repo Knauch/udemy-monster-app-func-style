@@ -7,18 +7,21 @@ import './App.css';
 const App = () => {
 
 
-  const [searchField, setSearchField] = useState(); //[value, setvalue]
+  const [searchField, setSearchField] = useState(''); //[value, setvalue]
   const [monsters, setMonsters] = useState([]); 
 
-  useEffect( () => {
+  useEffect(() => {
     fetch('https://jsonplaceholder.typicode.com/users')
     .then( (response) => response.json())
     .then( (users) => setMonsters(users))
-}, []) //IF EMPTY ARR then function runs only 1 time!!!!
+  }, [])
+ //IF EMPTY ARR then function runs only 1 time!!!!
 
   const filteredList = monsters.filter( (element)=> {
     return element.name.toLowerCase().includes(searchField)
   } )
+
+  console.log('filteredList', filteredList)
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
@@ -47,58 +50,4 @@ const App = () => {
 
 
 
-// class App extends Component {
- 
-//   constructor() {
-//     super();
-//     this.state = {
-//       monsters: [],
-//       searchField: '',
-//     }
-//     console.log('1-constructor')
-//   }
- 
-//   componentDidMount() {
-    
-//     console.log('2-componentDidMount')
-//     fetch('https://jsonplaceholder.typicode.com/users')
-//       .then(response => response.json() )
-//       .then( (users) => this.setState( 
-//       () => {
-//         return {monsters: users}
-//       },
-
-//       ))
-//   }
- 
-
-
-//   render() {
-//   console.log('3-render')
-
-//   const { monsters, searchField } = this.state;
-//   const { onSearchChange } =this;
-  
-//   const filteredList = monsters.filter( (elem) => {
-//     return elem.name.toLowerCase().includes(searchField)
-//   })
-  
-  
-
-//   return (
-//     <div className="App">
-
-//     <h1 className="app-title">Monster List</h1>
-
-//       
-        
-//      <CardList 
-//       monsters={filteredList}
-//       />
-
-//     </div>
-//   );
-//   }
-// }
- 
 export default App;
