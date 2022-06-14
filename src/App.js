@@ -5,12 +5,13 @@ import './App.css';
 
 
 const App = () => {
-
+console.log('App render');
 
   const [searchField, setSearchField] = useState(''); //[value, setvalue]
   const [monsters, setMonsters] = useState([]); 
 
   useEffect(() => {
+    console.log('useEffect called')
     fetch('https://jsonplaceholder.typicode.com/users')
     .then( (response) => response.json())
     .then( (users) => setMonsters(users))
@@ -21,7 +22,7 @@ const App = () => {
     return element.name.toLowerCase().includes(searchField)
   } )
 
-  console.log('filteredList', filteredList)
+  
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLowerCase();
