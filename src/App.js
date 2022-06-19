@@ -9,18 +9,25 @@ console.log('App render');
 
   const [searchField, setSearchField] = useState(''); //[value, setvalue]
   const [monsters, setMonsters] = useState([]); 
+  const [filteredList, setFilteredList] = useState([monsters]);
 
   useEffect(() => {
     console.log('useEffect called')
     fetch('https://jsonplaceholder.typicode.com/users')
     .then( (response) => response.json())
     .then( (users) => setMonsters(users))
-  }, [])
+  }, []);
  //IF EMPTY ARR then function runs only 1 time!!!!
 
-  const filteredList = monsters.filter( (element)=> {
-    return element.name.toLowerCase().includes(searchField)
-  } )
+  useEffect(() => {
+    const newFilteredList = monsters.filter( (element)=> {
+      return element.name.toLowerCase().includes(searchField)
+    } )
+
+    setFilteredList(newFilteredList)
+  }, [monsters, searchField]); //when ever [monsters, searchField] is changed
+
+  
 
   
 
@@ -29,7 +36,7 @@ console.log('App render');
     setSearchField(searchFieldString);
   }
 
-
+  
   
   return (
     <div className="App">
@@ -40,7 +47,6 @@ console.log('App render');
       placeholder ='search input'
       className='monsters-search-box'
      /> 
-
       <CardList 
       monsters={filteredList}
       />
